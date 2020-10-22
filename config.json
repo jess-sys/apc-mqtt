@@ -1,0 +1,11 @@
+{
+  "mqtt": {
+    "monitoringTopicPrefix": "apc/monitor",
+    "manageTopicPrefix": "apc/manage",
+    "brokerAddress": "172.30.42.120",
+    "brokerPort": "1883"
+  },
+  "log": {
+    "mode": "console"
+  }
+}
