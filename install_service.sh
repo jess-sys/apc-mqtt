@@ -37,3 +37,6 @@ yarn
 ## Enable and start service
 systemctl daemon-reload
 systemctl enable apc-mqtt
+systemctl start apc-mqtt
+systemctl status apc-mqtt
+
