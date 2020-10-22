@@ -11,7 +11,7 @@ Edit the config.json file to specify your own MQTT settings.
   "mqtt": {
     "monitoringTopicPrefix": "apc/monitor",
     "manageTopicPrefix": "apc/manage",
-    "brokerAddress": "127.0.0.1",
+    "brokerAddress": "172.30.42.120",
     "brokerPort": "1883"
   },
   "log": {
@@ -19,6 +19,11 @@ Edit the config.json file to specify your own MQTT settings.
   },
   "publish": {
     "period": 60
+  },
+  "commands": {
+    "setHigh": "echo '5\n4\nH\nq\nq\n' | /sbin/apctest",
+    "setLow": "echo '5\n4\nL\nq\nq\n' | /sbin/apctest",
+    "getSensorData": "echo '1\nq\n' | /sbin/apctest"
   }
 }
 ```
@@ -34,7 +39,7 @@ yarn
 
 #### Install as a service (optional)
 ```bash
-bash install_service.sh
+sudo ./install_service.sh
 ```
 
 ## TODO
