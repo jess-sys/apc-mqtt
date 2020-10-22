@@ -13,9 +13,8 @@ class ApcHandler {
         this.props = props
     }
 
-    // Set UPS sensitivity to LOW via serial commands
-    setSensitivityLow() {
-        exec("echo '5\n4\nL\nq\nq\n' | /sbin/apctest", (error, stdout, stderr) => {
+    cmd(command) {
+        exec(command, (error, stdout, stderr) => {
             if (stderr) {
                 this.error(`stderr: ${error || stderr}`);
                 return;
@@ -24,16 +23,16 @@ class ApcHandler {
         });
     }
 
+    // Set UPS sensitivity to LOW via serial commands
+    setSensitivityLow() {
+        this.cmd("echo '5\n4\nL\nq\nq\n' | /sbin/apctest")
+    }
+
     // Set UPS sensitivity to HIGH via serial commands
     setSensitivityHigh() {
-        exec("echo '5\n4\nH\nq\nq\n' | /sbin/apctest", (error, stdout, stderr) => {
-            if (stderr) {
-                this.error(`stderr: ${stderr}`);
-                return;
-            }
-            this.log("info: Set sensitivity to HIGH")
-        });
+        this.cmd("echo '5\n4\nH\nq\nq\n' | /sbin/apctest")
     }
+
     log(msg) {
         console.log(msg)
     }
