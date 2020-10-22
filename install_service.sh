@@ -24,7 +24,7 @@ fi
 
 ## Prepare a clean directory in /opt with needed files
 mkdir /opt/apc-mqtt
-cp src /opt/apc-mqtt
+cp src /opt/apc-mqtt -R
 cp package.json config.json /opt/apc-mqtt
 
 ## Copy systemd file
