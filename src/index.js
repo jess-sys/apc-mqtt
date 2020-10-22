@@ -10,17 +10,17 @@
             logger = new SysLogger({tag: 'apc-mqtt'});
         }
 
-        logger.log('info: Starting apc-mqtt')
-
         await mqttHandler.listen()
         setInterval(function() {
             try {
-                fiheifoh
+                mqttHandler.publishStatistics()
             } catch (err) {
+                process.exit()
                 logger.error('error: apc-mqtt crashed! Is the MQTT broker running ?')
             }
         }, 5 * 1000);
     } catch (e) {
-        // Deal with the fact the chain failed
+        process.exit()
+        console.error('error: apc-mqtt crashed! Is the MQTT broker running ?')
     }
 })();

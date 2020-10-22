@@ -80,6 +80,9 @@ class Handler {
             newMessage.parse(topic, message)
         })
     }
+    publishStatistics() {
+
+    }
 }
 
 module.exports = {
