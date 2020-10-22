@@ -9,20 +9,25 @@ if (config.log.mode === "syslog") {
 }
 
 class ApcHandler {
-    constructor(config) {
+    constructor(props) {
+        this.props = props
     }
+
+    // Set UPS sensitivity to LOW via serial commands
     setSensitivityLow() {
         exec("echo '5\n4\nL\nq\nq\n' | /sbin/apctest", (error, stdout, stderr) => {
-            if (error || stderr) {
+            if (stderr) {
                 this.error(`stderr: ${error || stderr}`);
                 return;
             }
             this.log("info: Set sensitivity to LOW")
         });
     }
+
+    // Set UPS sensitivity to HIGH via serial commands
     setSensitivityHigh() {
         exec("echo '5\n4\nH\nq\nq\n' | /sbin/apctest", (error, stdout, stderr) => {
-            if (error) {
+            if (stderr) {
                 this.error(`stderr: ${stderr}`);
                 return;
             }
