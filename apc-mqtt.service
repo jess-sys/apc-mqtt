@@ -1,0 +1,13 @@
+[Unit]
+Description=apc-mqtt.js - A simple tool to monitor and manage APC UPSes via MQTT
+Documentation=https://github.com/jess-sys/apc-mqtt
+After=network.target
+
+[Service]
+Type=simple
+User=sysadmin
+ExecStart=/usr/bin/node /opt/apc-mqtt/src/index.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
