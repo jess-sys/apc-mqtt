@@ -16,13 +16,16 @@ Edit the config.json file to specify your own MQTT settings.
   },
   "log": {
     "mode": "console"
+  },
+  "publish": {
+    "period": 60
   }
 }
 ```
 
 Note : `/availability`and `/set` will be appended to the topics.
 
-Note : supported logging modes are `console` and `syslog`.
+Note : Supported logging modes are `console` and `syslog`. Publish period is in seconds.
 
 #### Install dependencies
 ```bash

@@ -7,5 +7,8 @@
   },
   "log": {
     "mode": "console"
+  },
+  "publish": {
+    "period": 60
   }
 }
