@@ -44,10 +44,10 @@ class Message {
         logger.log("info: Valid MQTT setting received (generator_power: " + state + ")")
     }
 
-    send(key, value) {
+    send(object) {
         let client = this.client
         let topic = this.monitoringTopic
-        client.publish(topic, JSON.stringify({key: value}))
+        client.publish(topic, JSON.stringify(object))
     }
 }
 
@@ -76,7 +76,7 @@ class Handler {
         client.on('connect', function () {
             client.subscribe(manageTopic, function (err) {
                 if (!err) {
-                    client.publish(availabilityTopic, JSON.stringify({bypassMode: true}))
+                    client.publish(availabilityTopic, 'ON')
                     logger.log(`info: Connecting to MQTT (mqtt://${address}:${port})... OK`)
                     logger.log(`info: Listening for messages (on ${manageTopic})`)
                     return true
@@ -97,11 +97,8 @@ class Handler {
         this.monitoringTopic = config.mqtt.monitoringTopicPrefix
         this.manageTopic = config.mqtt.manageTopicPrefix
 
-
-        for (const [key, value] of Object.entries(data)) {
-            let newMessage = new Message(this.manageTopic, this.monitoringTopic, global.client)
-            newMessage.send(key, value)
-        }
+        let newMessage = new Message(this.manageTopic, this.monitoringTopic, global.client)
+        newMessage.send(data)
     }
 }
 
