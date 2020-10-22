@@ -32,12 +32,11 @@ Note : `/availability`and `/set` will be appended to the topics.
 
 Note : Supported logging modes are `console` and `syslog`. Publish period is in seconds.
 
-#### Install dependencies
-```bash
-yarn
-```
-
 #### Install as a service (optional)
+
+This script will install the service file, copy the project to /opt, install dependencies
+and enable (and start) the service for you.
+
 ```bash
 sudo ./install_service.sh
 ```
