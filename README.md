@@ -41,3 +41,7 @@ bash install_service.sh
 
 - TLS Support for MQTT
 - Advanced logging (levels)
+
+## Credits
+
+Thanks to https://networkupstools.org/protocols/apcsmart.html for providing the APC Smart commands reference!

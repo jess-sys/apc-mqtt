@@ -19,23 +19,23 @@ class Message {
         // Error handling
         if (topic !== this.manageTopic) { return }
         let parsedMessage = JSON.parse(message)
-        if (!("bypassMode" in parsedMessage) || typeof parsedMessage.bypassMode !== "boolean") { return }
+        if (!("generator_power" in parsedMessage) || typeof parsedMessage.generator_power !== "boolean") { return }
 
         // Create new APC Command
         let ApcHandler = new apc.ApcHandler()
 
-        // If !bypass, program APC EEPROM
-        if (parsedMessage.bypassMode === false)
+        // If !generator_power, program APC EEPROM
+        if (parsedMessage.generator_power === false)
             ApcHandler.setSensitivityHigh()
 
-        // If bypass, program APC EEPROM
-        else if (parsedMessage.bypassMode === true)
+        // If generator_power, program APC EEPROM
+        else if (parsedMessage.generator_power === true)
             ApcHandler.setSensitivityLow()
 
-        this.log(topic, message, parsedMessage.bypassMode)
+        this.log(topic, message, parsedMessage.generator_power)
     }
     log(topic, message, state) {
-        logger.log("info: Valid MQTT setting received (bypassMode: " + state + ")")
+        logger.log("info: Valid MQTT setting received (generator_power: " + state + ")")
     }
     send(key, value) {
         let client = this.client
