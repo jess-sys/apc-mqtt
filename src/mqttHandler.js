@@ -10,8 +10,10 @@ if (config.log.mode === "syslog") {
 }
 
 class Message {
-    constructor(manageTopic) {
+    constructor(manageTopic, monitoringTopic, client) {
         this.manageTopic = manageTopic
+        this.monitoringTopic = monitoringTopic
+        this.client = client
     }
     parse(topic, message) {
         // Error handling
@@ -35,6 +37,11 @@ class Message {
     log(topic, message, state) {
         logger.log("info: Valid MQTT setting received (bypassMode: " + state + ")")
     }
+    send(key, value) {
+        let client = this.client
+        let topic = this.monitoringTopic
+        client.publish(topic, JSON.stringify({key: value}))
+    }
 }
 
 class Handler {
@@ -52,6 +59,7 @@ class Handler {
         let address = this.address
         let port = this.port
         let manageTopic = this.manageTopic + "/set"
+        let monitoringTopic = this.monitoringTopic + "/status"
         let availabilityTopic = this.monitoringTopic + "/available"
 
         // On connection, send availability
@@ -61,13 +69,14 @@ class Handler {
                     client.publish(availabilityTopic, JSON.stringify({bypassMode: true}))
                     logger.log(`info: Connecting to MQTT (mqtt://${address}:${port})... OK`)
                     logger.log(`info: Listening for messages (on ${manageTopic})`)
+                    return true
                 }
             })
         })
 
         // On message, parse it
         client.on('message', function (topic, message) {
-            let newMessage = new Message(manageTopic)
+            let newMessage = new Message(manageTopic, monitoringTopic, client)
             newMessage.parse(topic, message)
         })
     }
