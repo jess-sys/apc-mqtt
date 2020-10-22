@@ -81,7 +81,9 @@ class Handler {
         })
     }
     publishStatistics() {
+        let apcHandler = new apc.ApcHandler()
 
+        console.log(apcHandler.getSensorData())
     }
 }
 

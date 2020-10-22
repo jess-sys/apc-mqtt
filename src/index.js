@@ -13,15 +13,16 @@
         }
 
         // Listen MQTT commands in the background
-        await mqttHandler.listen()
+        mqttHandler.listen()
 
         // Send sensor data each x period (defined in config)
-        setInterval(function() {
+        setInterval(async function () {
             try {
+                logger.log('info: Getting sensor data')
                 mqttHandler.publishStatistics()
             } catch (err) {
-                process.exit()
                 logger.error('error: apc-mqtt crashed! Is the MQTT broker running ?')
+                process.exit()
             }
         }, config.publish.period * 1000);
     } catch (e) {

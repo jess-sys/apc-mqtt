@@ -6,6 +6,9 @@
   "repository": "https://github.com/jess-sys/apc-mqtt",
   "author": "Jessy SOBREIRO <jessy.sobreiro@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "dependencies": {
     "ain2": "^3.0.0",
     "mqtt": "^4.2.1"
