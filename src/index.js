@@ -21,6 +21,7 @@
                 logger.log('info: Getting sensor data')
                 mqttHandler.publishStatistics()
             } catch (err) {
+                logger.error(err)
                 logger.error('error: apc-mqtt crashed! Is the MQTT broker running ?')
                 process.exit()
             }

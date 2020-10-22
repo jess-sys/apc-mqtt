@@ -9,11 +9,11 @@
     "mode": "console"
   },
   "publish": {
-    "period": 60
+    "period": 3
   },
   "commands": {
     "setHigh": "echo '5\n4\nH\nq\nq\n' | /sbin/apctest",
     "setLow": "echo '5\n4\nL\nq\nq\n' | /sbin/apctest",
-    "getSensorData": "echo '1\nq\n' | /sbin/apctest"
+    "getSensorData": "/tmp/apctest"
   }
 }

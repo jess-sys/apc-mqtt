@@ -15,11 +15,16 @@ class Message {
         this.monitoringTopic = monitoringTopic
         this.client = client
     }
+
     parse(topic, message) {
         // Error handling
-        if (topic !== this.manageTopic) { return }
+        if (topic !== this.manageTopic) {
+            return
+        }
         let parsedMessage = JSON.parse(message)
-        if (!("generator_power" in parsedMessage) || typeof parsedMessage.generator_power !== "boolean") { return }
+        if (!("generator_power" in parsedMessage) || typeof parsedMessage.generator_power !== "boolean") {
+            return
+        }
 
         // Create new APC Command
         let ApcHandler = new apc.ApcHandler()
@@ -34,9 +39,11 @@ class Message {
 
         this.log(topic, message, parsedMessage.generator_power)
     }
+
     log(topic, message, state) {
         logger.log("info: Valid MQTT setting received (generator_power: " + state + ")")
     }
+
     send(key, value) {
         let client = this.client
         let topic = this.monitoringTopic
@@ -54,13 +61,16 @@ class Handler {
 
         logger.log(`info: Connecting to MQTT (mqtt://${this.address}:${this.port})`)
     }
+
     listen() {
-        let client  = mqtt.connect(`mqtt://${this.address}:${this.port}`)
+        let client = mqtt.connect(`mqtt://${this.address}:${this.port}`)
         let address = this.address
         let port = this.port
         let manageTopic = this.manageTopic + "/set"
         let monitoringTopic = this.monitoringTopic + "/status"
         let availabilityTopic = this.monitoringTopic + "/available"
+
+        global.client = client
 
         // On connection, send availability
         client.on('connect', function () {
@@ -80,10 +90,18 @@ class Handler {
             newMessage.parse(topic, message)
         })
     }
-    publishStatistics() {
-        let apcHandler = new apc.ApcHandler()
 
-        console.log(apcHandler.getSensorData())
+    async publishStatistics() {
+        let apcHandler = new apc.ApcHandler()
+        let data = await apcHandler.getSensorData()
+        this.monitoringTopic = config.mqtt.monitoringTopicPrefix
+        this.manageTopic = config.mqtt.manageTopicPrefix
+
+
+        for (const [key, value] of Object.entries(data)) {
+            let newMessage = new Message(this.manageTopic, this.monitoringTopic, global.client)
+            newMessage.send(key, value)
+        }
     }
 }
 
