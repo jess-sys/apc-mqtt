@@ -16,7 +16,7 @@ class ApcHandler {
     cmd(command) {
         exec(command, (error, stdout, stderr) => {
             if (stderr) {
-                this.error(`stderr: ${error || stderr}`);
+                this.error(`stderr: ${stderr}`);
                 return;
             }
             this.log("info: Set sensitivity to LOW")
