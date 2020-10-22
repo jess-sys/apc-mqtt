@@ -10,5 +10,10 @@
   },
   "publish": {
     "period": 60
+  },
+  "commands": {
+    "setHigh": "echo '5\n4\nH\nq\nq\n' | /sbin/apctest",
+    "setLow": "echo '5\n4\nL\nq\nq\n' | /sbin/apctest",
+    "getSensorData": "echo '5\n4\nH\nq\nq\n' | /sbin/apctest"
   }
 }

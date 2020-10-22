@@ -23,13 +23,13 @@ class ApcHandler {
 
     // Set UPS sensitivity to LOW via serial commands
     setSensitivityLow() {
-        this.cmd("echo '5\n4\nL\nq\nq\n' | /sbin/apctest")
+        this.cmd(config.commands.setLow)
         this.log("info: Set sensitivity to LOW")
     }
 
     // Set UPS sensitivity to HIGH via serial commands
     setSensitivityHigh() {
-        this.cmd("echo '5\n4\nH\nq\nq\n' | /sbin/apctest")
+        this.cmd(config.commands.setHigh)
         this.log("info: Set sensitivity to LOW")
     }
 
